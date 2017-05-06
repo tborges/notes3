@@ -405,10 +405,20 @@ class ZombiesController < ApplicationController
 end
 # Write a create action that will create a new Zombie 
 # from the params and then redirect to the created Zombie's show page
+# Make sure to use Rails 4 strong_parameters.
 class ZombiesController < ApplicationController
   def create
-    @zombie = Zombie.create(params[:zombie])
-    redirect_to(zombie_path(@zombie))
+    @zombieX = Zombie.create
+    @zombieX.name = 'Gregg'
+    @zombieX.graveyard = 'TBA'
+    @zombieX.save
+    redirect_to(zombie_path(@zombieX))
+  end
+
+  private
+
+  def zombie_params
+    params.require(:zombie).permit(:name, :graveyard)
   end
 end
 # Add a before filter that calls a method to check 
